@@ -10,7 +10,6 @@ export const bidSlice = createSlice({
     currentUser: 0,
     stage: 2,
     enableCard: [0, 500, 1000, 1500, 2000, 2500],
-    error: {},
   },
   reducers: {
     setReduxCoins: (state, action) => {
@@ -62,9 +61,6 @@ export const bidSlice = createSlice({
     },
     enableAllCards: (state) => {
       state.enableCard = [0, 500, 1000, 1500, 2000, 2500];
-    },
-    removeAllErrors: (state, action) => {
-      state.error = {};
     },
   },
 });

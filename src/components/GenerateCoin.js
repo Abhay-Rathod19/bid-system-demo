@@ -12,9 +12,9 @@ import { ResponsiveAppBar } from "./DemoAppbar";
 import { usersImages } from "../constants/bidData/bidCardData";
 import { BidResult } from "./BidResult";
 import { ternary } from "../utils/ternary";
+import { checkIncludes } from "../utils/javaScript";
 
 export const GenerateCoin = () => {
-
     const [bidResult, setBidResult] = useState(false);
 
     const user = userList;
@@ -40,13 +40,15 @@ export const GenerateCoin = () => {
         }
     };
 
-    const arrOfCompleted = comptdCard.map((element) => ternary(element === "Free", 0, Number(element)));
+    const arrOfCompleted = comptdCard?.map((element) =>
+        ternary(element === "Free", 0, Number(element))
+    );
 
     const resCheckNow = arrOfAll
-        .map((ele) => ternary(!(arrOfCompleted.includes(ele)), ele, undefined))
-        .filter((ele) => ele !== undefined);
+        ?.map((ele) => ternary(!checkIncludes(arrOfCompleted, ele), ele, undefined))
+        ?.filter((ele) => ele !== undefined);
 
-    if (stage === 0 && resCheckNow.every((val) => coinValue < val)) {
+    if (stage === 0 && resCheckNow?.every((val) => coinValue < val)) {
         alert("Your turn is over now...");
         setTimeout(() => {
             dispatch(setCurrentUser());
@@ -66,10 +68,7 @@ export const GenerateCoin = () => {
                 onClickEvent={() => generateCoins(500, 2600)}
             />
 
-            {
-                bidResult ? <BidResult /> : ""
-            }
-
+            {bidResult ? <BidResult /> : ""}
         </>
     );
 };
