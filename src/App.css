@@ -1,0 +1,79 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* bid-demo start */
+
+.carousel {
+  /* width: 100%; */
+  height: auto;
+  /* background-color: rgb(206, 204, 202); */
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 20px;
+}
+
+.carousel-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bid-card-container {
+  width: 500px;
+  border: 1px solid black;
+  background-color: rgb(195, 218, 239);
+  border-radius: 4px;
+  margin: 5px;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+}
+
+.bid-inputs {
+  width: 400px;
+  /* height: 130px; */
+  /* overflow: hidden; */
+  display: flex;
+  flex-wrap: wrap;
+  /* border: 2px solid black; */
+  justify-content: center;
+}
+
+.bid-amt-input {
+  border: none;
+  border-radius: 5px;
+}
+
+.error-msg {
+  width: 180px;
+  height: 25px;
+  margin-top: -8px;
+  font-size: 14.5px;
+  /* overflow: hidden; */
+}
+
+.bid-result {
+  background-color: aliceblue;
+  padding: 10px;
+}
+
+/* bid-demo end */
