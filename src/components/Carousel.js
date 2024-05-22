@@ -14,7 +14,7 @@ export const Carousel = () => {
     <>
       <div id="carouselExample" className="carousel slide">
         <div className="carousel-inner">
-          {bidCardData.map((card, index) => {
+          {bidCardData?.map((card, index) => {
             const { label, labelValue } = card;
             return (
               <BidCard

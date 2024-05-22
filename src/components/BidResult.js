@@ -1,7 +1,7 @@
-import { Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { LabelComponent } from "../shared/BIDLabelComp";
+import { ButtonComponent } from "../shared/BIDButton";
 
 export const BidResult = () => {
     let winnerUser = null;
@@ -41,6 +41,9 @@ export const BidResult = () => {
             <LabelComponent className="bid-result" variant="h6">
                 The lowest unique amount of bid is : <strong>{lowestUniqueAmount}</strong> from <strong>{winnerUser}</strong>
             </LabelComponent>
+            <ButtonComponent onClick={() => window.location.reload()}>
+                Restart Game
+            </ButtonComponent>
         </>
     );
 };

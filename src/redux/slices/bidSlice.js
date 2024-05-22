@@ -46,6 +46,9 @@ export const bidSlice = createSlice({
       state.error = {};
       state.coins = 0;
     },
+    resetUser: (state, action) => {
+      state.currentUser = 5;
+    },
     enableOtherCards: (state, action) => {
       state.completedCards = [];
     },
@@ -76,6 +79,7 @@ export const {
   setCurrentUser,
   increaseStage,
   resetStage,
+  resetUser,
   enableAllCards,
   addRdxBidAmt,
   enableOtherCards,

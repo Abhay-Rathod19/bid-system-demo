@@ -16,9 +16,10 @@ import {
 } from "../redux/slices/bidSlice";
 import { validation, validateAll } from "../utils/validation";
 import { InputComponent } from "../shared/BIDInputComp";
-import { objectValues } from "../utils/javaScript";
+import { checkIncludes, objectValues } from "../utils/javaScript";
 
 export const BidCard = ({ disable = false, cardLabel, coinValueReq }) => {
+
   const [bidAmt, setBidAmt] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -40,14 +41,15 @@ export const BidCard = ({ disable = false, cardLabel, coinValueReq }) => {
 
     const remainingCards = [];
     if (cardLabel !== "Free") {
-      for (let x of data) {
-        if (!completed.includes(x)) {
-          remainingCards.push(x);
+      for (let card of data) {
+        if (!checkIncludes(completed, card)) {
+          remainingCards.push(card);
         }
       }
     }
 
     if (remainingCards.length) {
+      dispatch(disableOtherCards(remainingCards[0]));
       alert(
         `First Complete card with value ${remainingCards[0] === 0 ? `Free` : remainingCards[0]}`
       );
@@ -55,6 +57,11 @@ export const BidCard = ({ disable = false, cardLabel, coinValueReq }) => {
       const { name, value } = e.target;
       dispatch(disableOtherCards(coinValueReq));
       dispatch(removeAllErrors());
+
+      dispatch(addRdxBidAmt({
+        [`${currUser}-${label}-${name}`]:
+          value === "0" ? value : Number(value)
+      }));
 
       setBidAmt((prev) => {
         return {
@@ -72,11 +79,10 @@ export const BidCard = ({ disable = false, cardLabel, coinValueReq }) => {
             Number(value),
             bidAmt,
             bidData,
-            currUser
+            currUser,
           ),
         };
       });
-
     }
   };
 
@@ -88,7 +94,6 @@ export const BidCard = ({ disable = false, cardLabel, coinValueReq }) => {
       const amtArray = objectValues(bidAmt);
       const pyLoadObj = { user: currUser, amounts: amtArray };
       setBidAmt({});
-      dispatch(addRdxBidAmt(bidAmt));
       dispatch(addBidAmount(pyLoadObj));
       dispatch(markCompCards(cardLabel));
       dispatch(checkAvailableCards());
@@ -100,7 +105,7 @@ export const BidCard = ({ disable = false, cardLabel, coinValueReq }) => {
     <div className="bid-card-container">
       <Typography variant="h6">{cardLabel}</Typography>
       <div className="bid-inputs">
-        {inputData.map((field, index) => {
+        {inputData?.map((field, index) => {
           const { type, name, id } = field;
           return (
             <React.Fragment key={`input-${index}`}>
@@ -111,11 +116,7 @@ export const BidCard = ({ disable = false, cardLabel, coinValueReq }) => {
                   disabled={disable}
                   name={name}
                   id={`user-1`}
-                  value={
-                    bidAmt[`${currUser}-${cardLabel}-${name}`] ||
-                    bidDetails[`${currUser}-${cardLabel}-${name}`] ||
-                    ""
-                  }
+                  value={bidDetails[`${currUser}-${cardLabel}-${name}`] || ""}
                   onChange={(e) => handleInputChange(e, cardLabel, id)}
                 />
 

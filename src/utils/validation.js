@@ -1,4 +1,4 @@
-export const validation = (name, value, state, storeState, user) => {
+export const validation = (name, value, state, storeState, currUser) => {
 
     if (value.toString().length <= 0 || value === 0 || value < 0) {
         // return "Enter value to submit.";
@@ -6,11 +6,10 @@ export const validation = (name, value, state, storeState, user) => {
     } else if (value.toString().length > 7) {
         return "7 digit error.";
         // return "Number may only have 7 digits.";
-    } else if (Object.values(state).includes(Number(value)) || storeState[user]?.includes(Number(value))) {
+    } else if (Object.values(state)?.includes(Number(value)) || storeState[currUser]?.includes(Number(value))) {
         // return "This value is already entered.";
         return "Repeated value.";
     }
-
 };
 
 
@@ -24,6 +23,7 @@ export const validateAll = (state, currUser, cardLabel, errors, setErrors) => {
             erroEmpty[`${currUser}-${cardLabel}-${field}`] = "This field is required.";
         }
     }
+
     if (Object.values(erroEmpty).filter((item) => item !== undefined).length) {
         setErrors({ ...errors, ...erroEmpty });
     }

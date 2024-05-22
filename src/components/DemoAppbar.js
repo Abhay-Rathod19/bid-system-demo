@@ -8,8 +8,18 @@ import Avatar from "@mui/material/Avatar";
 import { ButtonComponent } from "../shared/BIDButton";
 import { ternary } from "../utils/ternary";
 import { LabelComponent } from "../shared/BIDLabelComp";
+import { useDispatch } from "react-redux";
+import { resetStage, resetUser } from "../redux/slices/bidSlice";
 
 export const ResponsiveAppBar = ({ userName, remainingChance, curUserNum, availCoins, onClickEvent, userImage, setBidResult }) => {
+
+  const dispatch = useDispatch();
+
+  const handleShowResult = () => {
+    setBidResult(true);
+    dispatch(resetStage());
+    dispatch(resetUser());
+  }
 
   return (
     <AppBar position="static" sx={{ background: "#383434", color: "White", display: "flex", alignItems: "baseline" }}>
@@ -42,7 +52,7 @@ export const ResponsiveAppBar = ({ userName, remainingChance, curUserNum, availC
 
             <ButtonComponent
               color="info"
-              onClick={() => setBidResult(true)}
+              onClick={handleShowResult}
               disabled={ternary(curUserNum > 1, false, true)}
             >
               Show result
